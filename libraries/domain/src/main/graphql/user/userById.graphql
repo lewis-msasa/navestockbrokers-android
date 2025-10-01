@@ -1,0 +1,55 @@
+query GetUserById(
+  $id: UUID!,
+  $ordersFirst: Int, $ordersAfter: String,
+  $portfoliosFirst: Int, $portfoliosAfter: String,
+  $transactionsFirst: Int, $transactionsAfter: String
+) {
+  userById(id: $id) {
+    id
+    username
+    email
+
+    orders(first: $ordersFirst, after: $ordersAfter) {
+      edges {
+        node {
+          id
+          stockId
+          price
+          quantity
+        }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+
+    userPortfolios(first: $portfoliosFirst, after: $portfoliosAfter) {
+      edges {
+        node {
+          id
+          title
+        }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+
+    transactions(first: $transactionsFirst, after: $transactionsAfter) {
+      edges {
+        node {
+          id
+          stockId
+          quantity
+          createdAt
+        }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+  }
+}
