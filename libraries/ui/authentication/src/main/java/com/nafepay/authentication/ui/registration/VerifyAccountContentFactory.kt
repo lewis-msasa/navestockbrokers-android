@@ -1,0 +1,219 @@
+package com.nafepay.authentication.ui.registration
+
+import android.annotation.SuppressLint
+import android.util.Log
+import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import com.nafepay.common_ui.composers.textfields.CustomTextField
+import com.nafepay.common_ui.theme.commonPadding
+import com.nafepay.authentication.events.RegistrationEvent
+import com.nafepay.authentication.states.RegistrationState
+import com.nafepay.authentication.viewModels.RegistrationViewModel
+import com.nafepay.common_ui.composers.general.LoadingBoxWithParameters
+import kotlinx.coroutines.launch
+
+@Composable
+fun VerifyAccount(
+    viewModel: RegistrationViewModel
+){
+    val state by viewModel.uiState.collectAsState()
+    VerifyAccount(
+        viewState = state,
+        viewModel::handleRegistrationEvent
+    )
+
+}
+
+@SuppressLint("CoroutineCreationDuringComposition")
+@Composable
+private fun VerifyAccount(
+    viewState: RegistrationState,
+    events: (event: RegistrationEvent) -> Unit,
+){
+    val snackBarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+    Surface(color = MaterialTheme.colorScheme.surface,
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth()
+
+        ) {
+            BoxWithConstraints() {
+                val screenWidth = maxWidth
+                val screenHeight = maxHeight
+                val scrollState = rememberScrollState(0)
+            Box(Modifier.fillMaxSize()) {
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.TopCenter)
+                        .verticalScroll(scrollState)
+                )
+                {
+
+                    SnackbarHost(
+                        hostState = snackBarHostState,
+                        modifier = Modifier
+                            .background(color = MaterialTheme.colorScheme.background)
+
+
+                    )
+                    Text(
+                        "Verify Account",
+                        textAlign = TextAlign.Start,
+                        style = MaterialTheme.typography.titleSmall.copy(
+                            MaterialTheme.colorScheme.onSurface,
+                            fontWeight = FontWeight.Bold
+                        ),
+                        modifier = Modifier
+                            .align(alignment = Alignment.Start)
+                            .padding(start = commonPadding)
+                    )
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    Text(
+                        "input the six digit verification code that was sent to your email address",
+                        textAlign = TextAlign.Start,
+                        style = TextStyle(color = MaterialTheme.colorScheme.onSurface),
+                        modifier = Modifier
+                            .align(alignment = Alignment.Start)
+                            .padding(horizontal = commonPadding)
+                    )
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    Row(
+                        horizontalArrangement = Arrangement.End,
+                        modifier = Modifier.width(screenWidth)
+                            .padding(horizontal = commonPadding)
+                    ) {
+
+                        Text(
+                            "Resend Code",
+                            Modifier.clickable {
+                                events(RegistrationEvent.ResendVerificationCode)
+                            }.padding(bottom = 4.dp),
+                            style = TextStyle(fontWeight = FontWeight.Bold),
+                            color = MaterialTheme.colorScheme.primary,
+
+                            )
+                    }
+
+                    var verificationCode by remember { mutableStateOf(TextFieldValue(viewState.verificationCode)) }
+                    CustomTextField(
+                        value = verificationCode,
+                        placeholder = "Enter Verification Code",
+                        onChange = {
+                            events(RegistrationEvent.VerificationCodeChanged(it.text))
+                            verificationCode = it
+                        },
+                        width = screenWidth,
+                        padding = commonPadding,
+                        enabled = !viewState.isLoading,
+                        shape = RoundedCornerShape(10),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.NumberPassword,
+                            imeAction = ImeAction.Next
+                        )
+                    )
+
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    Button(
+                        shape = RoundedCornerShape(30),
+                        enabled = viewState.isVerifyCodeContentValid && !viewState.isLoading,
+                        modifier = Modifier
+                            .width(screenWidth)
+                            .height(70.dp)
+                            .padding(horizontal = 12.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                        ),
+                        onClick = {
+                            events(RegistrationEvent.VerifyCodeClicked)
+                        }) {
+
+                        Text(
+                            "Verify Account",
+                            color = MaterialTheme.colorScheme.surface
+                        )
+
+
+                    }
+
+
+                    //Spacer(modifier = Modifier.padding(top = screenHeight/2f))
+
+                    if (!viewState.errorMessage.isNullOrEmpty()) {
+                        coroutineScope.launch {
+                            var result = snackBarHostState.showSnackbar(
+                                message = viewState.errorMessage
+                            )
+
+
+                        }
+                    }
+                    if (viewState.successMessage.isNotEmpty()) {
+                          Log.d("Toast", viewState.successMessage)
+                         Toast.makeText(LocalContext.current,viewState.successMessage,Toast.LENGTH_LONG).show()
+                    }
+
+
+
+                }
+                if (viewState.isLoading) {
+                    LoadingBoxWithParameters(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .align(Alignment.TopCenter)
+                            .background(color = MaterialTheme.colorScheme.background.copy(alpha = 0.5f))
+                    )
+                }
+
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.align(Alignment.BottomCenter).padding(12.dp)
+                ) {
+                    Text(
+                        "Not Working?",
+
+                        color = MaterialTheme.colorScheme.onSurface,
+
+                        )
+                    Text(
+                        "Contact Us",
+                        Modifier.clickable {
+
+                        }.padding(start = 4.dp),
+                        style = TextStyle(textAlign = TextAlign.Center),
+                        color = MaterialTheme.colorScheme.primary,
+
+                        )
+                }
+
+                Spacer(modifier = Modifier.padding(commonPadding))
+
+            }
+
+            }
+        }
+
+
+}

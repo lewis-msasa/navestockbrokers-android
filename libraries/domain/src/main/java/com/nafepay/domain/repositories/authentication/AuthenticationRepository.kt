@@ -1,4 +1,4 @@
-package com.fov.domain.repositories.authentication
+package com.nafepay.domain.repositories.authentication
 
 import com.nafepay.domain.models.GeneralResult
 import com.nafepay.domain.models.authentication.login.RefreshTokenResult

@@ -22,7 +22,7 @@ class AuthInterceptor(private val sharedPrefs: Preferences): Interceptor {
 
             val body = jsonData.toRequestBody("application/json".toMediaTypeOrNull());
             val request =  originalRequest.newBuilder()
-                .url("${BuildConfig.URL_PROTOCOL}${BuildConfig.FOV_URL}/Token/refresh")
+                .url("${BuildConfig.URL_PROTOCOL}${BuildConfig.nafepay_URL}/Token/refresh")
                 .addHeader("Authorization", "Bearer $token")
                 .post(body)
                 .build()

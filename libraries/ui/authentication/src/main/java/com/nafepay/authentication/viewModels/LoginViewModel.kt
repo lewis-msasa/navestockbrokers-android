@@ -1,0 +1,194 @@
+package com.nafepay.authentication.viewModels
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.nafepay.authentication.events.LoginEvent
+import com.nafepay.authentication.states.LoginState
+import com.nafepay.core.di.Preferences
+import com.nafepay.domain.database.daos.UserDao
+import com.nafepay.domain.interactors.authentication.Authenticate
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+
+
+class LoginViewModel(
+    private val authenticate: Authenticate,
+    private val sharedPrefs: Preferences,
+    private val userDao: UserDao,
+    private val navigationManager: NavigationManager
+) : ViewModel()
+{
+    private val _uiState = MutableStateFlow(LoginState())
+    val uiState: StateFlow<LoginState> = _uiState
+
+    private var _toast: MutableStateFlow<String> = MutableStateFlow("")
+    val toast: StateFlow<String> get() = _toast
+    init{
+        viewModelScope.launch {
+            var usr = userDao.getUser().collect { user ->
+                if(user == null){
+                    _uiState.value = uiState.value.build {
+                        this.isRestore = true
+                    }
+                }
+            }
+
+        }
+    }
+    fun handleRegistrationEvent(event: LoginEvent) {
+        _uiState.value = uiState.value.build {
+            when (event) {
+                LoginEvent.DismissErrorDialog -> {
+                    this.error = null
+                }
+                is LoginEvent.EmailChanged -> {
+                    this.userEmail = event.email
+                }
+                LoginEvent.ForgotPasswordClicked -> {
+                    navigationManager.navigate(AuthenticationDirections.forgotPassword)
+                }
+                LoginEvent.LoginClicked -> {
+                    if(isLoginContentValid) {
+                        login {
+                            this.loginDone = true
+                        }
+                    }
+                    else
+                        error = "Please fill all fields"
+                }
+                LoginEvent.SocialLoginClicked -> {
+                     socialLogin {
+                         this.loginDone = true
+                     }
+                }
+                is LoginEvent.PasswordChanged -> {
+                    this.userPassword = event.password
+                }
+                is LoginEvent.SocialMediaServiceChanged-> {
+                    this.socialMediaService = event.service
+                }
+                is LoginEvent.SocialMediaTokenChanged-> {
+                    this.socialMediaToken = event.token
+                }
+                is LoginEvent.SocialMediaIsFirstTimeChanged-> {
+                    this.socialMediaFirstTime = event.isFirstTime
+                }
+                LoginEvent.RegisterClicked -> {
+                    navigationManager.navigate(AuthenticationDirections.registration)
+                }
+                else -> {
+
+                }
+            }
+            _uiState.value = uiState.value.build {
+                isLoginContentValid = userEmail.trim().isNotEmpty() &&
+                        userPassword.trim().isNotEmpty() && Validation.isEmail(userEmail.trim())
+            }
+        }
+    }
+    private fun socialLogin(doneLoggingIn : () -> Unit){
+        _uiState.value = uiState.value.build {
+            loading = true
+            error = null
+        }
+        viewModelScope.launch {
+            try {
+                val res = authenticate.socialSignIn(
+                    fullName = _uiState.value.fullname,
+                    username = _uiState.value.username,
+                    emailAddress = _uiState.value.emailAddress,
+                    service = _uiState.value.socialMediaService,
+                    token = _uiState.value.socialMediaToken,
+                    isFirstTime = _uiState.value.socialMediaFirstTime,
+                    profileImageUrl = null
+                )
+                processResponse(res,_uiState.value.socialMediaFirstTime)
+                if (res != null) {
+                    if(res.success){
+                        doneLoggingIn()
+                        _uiState.value = uiState.value.build {
+                            loginDone = true
+                        }
+                    }
+                }
+            }
+            catch(ex : ServerException){
+                _uiState.value = uiState.value.build {
+                    loading = false
+                    error = ex.message
+                }
+            }
+            catch (ex : Exception){
+
+                _uiState.value = uiState.value.build {
+                    loading = false
+                    error = ex.message
+                }
+            }
+        }
+    }
+    private fun login(doneLoggingIn : () -> Unit){
+        _uiState.value = uiState.value.build {
+            loading = true
+            error = null
+        }
+        viewModelScope.launch {
+            try {
+                val res = authenticate.signIn(
+                    emailAddress = _uiState.value.emailAddress,
+                    password =  _uiState.value.password,
+                    restore = _uiState.value.isRestore
+                )
+                processResponse(res,_uiState.value.isRestore)
+                if (res != null) {
+                    if(res.success){
+                        doneLoggingIn()
+                        _uiState.value = uiState.value.build {
+                            loginDone = true
+                        }
+                    }
+                }
+
+            }
+            catch(ex : Exception){
+
+            }
+        }
+    }
+    private suspend fun processResponse(res : SigninResult?, toStore : Boolean){
+        if(res != null){
+            if(res.success){
+                if(toStore){
+                    userDao.insertAll(
+                        User(
+                            name = res.user.name,
+                            privateKey =  res.user.privateKey,
+                            publicKey = res.user.publicKey,
+                            id = res.user.id,
+                            email = res.user.email,
+                            profile = res.user.profile
+                        )
+                    )
+
+                }
+                sharedPrefs.setAuthToken(res.token)
+                //navigationManager.navigate(HomeDirections.home)
+            }
+            else{
+                _uiState.value = uiState.value.build {
+                    loading = false
+                    error = "Wrong credentials. Please try again"
+                }
+                sharedPrefs.setAuthToken("")
+            }
+        }
+        else {
+            _uiState.value = uiState.value.build {
+                loading = false
+                error = "Error login. Try again"
+            }
+        }
+    }
+
+}

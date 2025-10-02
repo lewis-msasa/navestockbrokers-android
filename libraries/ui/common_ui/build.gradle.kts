@@ -30,6 +30,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures {
+        compose = true
+    }
 }
 
 dependencies {
@@ -37,7 +40,28 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.androidx.lifecycle.runtime)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(project(":libraries:navigation"))
+    implementation(project(":libraries:domain"))
+    implementation(project(":libraries:core"))
+    implementation(libs.androidx.compose.navigation)
+    implementation(libs.androidx.compose.paging)
+
+    implementation(libs.androidx.lifecycle.liveData)
+    implementation(libs.androidx.lifecycle.runtime)
+    implementation(libs.coil)
+
+    implementation(libs.androidx.compose.runtime.livedata)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.layout)
+    implementation(libs.androidx.compose.animation)
 }

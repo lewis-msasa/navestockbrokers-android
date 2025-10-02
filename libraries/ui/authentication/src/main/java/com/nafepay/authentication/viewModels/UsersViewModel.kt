@@ -1,0 +1,147 @@
+package com.nafepay.authentication.viewModels
+
+import android.util.Log
+import androidx.lifecycle.*
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import com.nafepay.authentication.models.UserModel
+import com.nafepay.authentication.events.UsersEvent
+import com.nafepay.authentication.pagination.UserNotificationSource
+import com.nafepay.authentication.states.UsersState
+import com.nafepay.authentication.utils.constants.NotificationType
+import com.nafepay.core.di.Preferences
+import com.nafepay.domain.database.daos.UserDao
+import com.nafepay.domain.database.models.User
+import com.nafepay.domain.interactors.authentication.Authenticate
+import com.nafepay.domain.utils.constants.QueryConstants
+import com.nafepay.navigation.HomeDirections
+import com.nafepay.navigation.NavigationManager
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class UsersViewModel @Inject constructor(
+    private val authenticate: Authenticate,
+    private val userDao: UserDao,
+    private val sharedPrefs: Preferences,
+    private val navigationManager: NavigationManager
+) :  ViewModel() {
+    private val _uiState = MutableStateFlow(UsersState())
+    val uiState: StateFlow<UsersState> = _uiState
+    val users: LiveData<List<User>> =  userDao.getUsers().asLiveData()
+
+
+   val notificationsPaging = Pager(PagingConfig(pageSize = QueryConstants.NUM_ROWS)) {
+        UserNotificationSource(
+            authenticate,
+            userDao,
+            NotificationType.UNREAD
+        )
+    }.flow
+    init{
+          viewModelScope.launch {
+
+              var user = userDao.getUsers().first()?.first()
+              if(user != null) {
+                   val cur = getUserGraph(user.id) { cur ->
+                       _uiState.value = uiState.value.build {
+                           currentUserModel = cur
+                           editUserModel = cur
+                           userModel = cur
+                       }
+                   }
+
+              }
+          }
+
+           getNumberNotifications()
+    }
+
+    private fun getNumberNotifications() {
+       viewModelScope.launch {
+           try{
+               var user = userDao.getUsers().first().first()
+               if(user != null) {
+
+                   val res = authenticate.getNumberUnreadNotifications(user.id)
+                   _uiState.value = uiState.value.build {
+                       numNotifications = res
+                   }
+               }
+           }
+           catch(ex : Exception) {
+                   val ex = ex.message
+           }
+       }
+    }
+
+    fun handleUsersEvent(event: UsersEvent) {
+        if(event == UsersEvent.LoadNotifications){
+
+        }
+        else {
+            _uiState.value = uiState.value.build {
+                when (event) {
+
+
+
+                    UsersEvent.LogoutUser -> {
+                        viewModelScope.launch {
+
+                            sharedPrefs.setAuthToken("")
+                        }
+                        logoutDone = true
+
+                    }
+                    UsersEvent.GoToProfile -> {
+                        //navigate to profile
+                        navigationManager.navigate(HomeDirections.profile)
+                    }
+
+
+                    else -> {
+
+                    }
+                }
+                isEditUserContentValid = editUserModel?.name?.isNotEmpty() == true
+                isEditUserContentValid = editUserModel?.email?.isNotEmpty() == true
+                        && editUserModel?.phoneNumber?.isNotEmpty() == true
+            }
+        }
+    }
+
+
+    fun saveDeviceToken(token : String){
+        viewModelScope.launch {
+            Log.d("SavingToken", token)
+            authenticate.sendDeviceToken(token)
+        }
+    }
+    fun getUserGraph(userId : String,callback:(UserModel) -> Unit) {
+
+        viewModelScope.launch {
+            try {
+                val userGraph = authenticate.getUserGraph(userId)
+                if (userGraph != null) {
+                    if(userGraph.user != null){
+                         val user = UserModel.ModelMapper.fromGraph(userGraph)
+                            _uiState.value.build {
+                                userModel = user
+                                loading = false
+                            }
+                            callback(user)
+
+                    }
+                }
+
+            }
+            catch(ex : Exception) {
+
+            }
+        }
+
+    }
+
+}

@@ -1,7 +1,7 @@
 package com.nafepay.domain.di
 
 import androidx.room.Room
-import com.fov.domain.repositories.authentication.AuthenticationRepository
+import com.nafepay.domain.repositories.authentication.AuthenticationRepository
 import com.nafepay.core.di.Preferences
 import com.nafepay.domain.database.AppDatabase
 import com.nafepay.domain.interactors.authentication.Authenticate

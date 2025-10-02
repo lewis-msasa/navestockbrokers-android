@@ -30,12 +30,17 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures {
+        compose = true
+    }
 }
 
 dependencies {
-
+    implementation(project(":libraries:core"))
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.compose.navigation)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.compose.paging)
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

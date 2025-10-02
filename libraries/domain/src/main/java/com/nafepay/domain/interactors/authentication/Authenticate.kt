@@ -2,7 +2,7 @@ package com.nafepay.domain.interactors.authentication
 
 
 
-import com.fov.domain.repositories.authentication.AuthenticationRepository
+import com.nafepay.domain.repositories.authentication.AuthenticationRepository
 import com.nafepay.domain.database.daos.UserDao
 import com.nafepay.domain.database.models.User
 import com.nafepay.domain.models.authentication.user.DeleteAccountDTO

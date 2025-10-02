@@ -25,7 +25,7 @@ class ApolloSetup {
 
         var builder = ApolloClient
             .Builder()
-            .serverUrl("https://${BuildConfig.FOV_URL}${url}")
+            .serverUrl("https://${BuildConfig.nafepay_URL}${url}")
             .okHttpClient(okHttp.build())
         return builder.build();
     }

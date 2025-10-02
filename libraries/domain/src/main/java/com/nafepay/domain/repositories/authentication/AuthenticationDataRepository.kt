@@ -1,7 +1,7 @@
 package com.nafepay.domain.repositories.authentication
 
 
-import com.fov.domain.repositories.authentication.AuthenticationRepository
+import com.nafepay.domain.repositories.authentication.AuthenticationRepository
 import com.nafepay.domain.models.GeneralResult
 import com.nafepay.domain.models.authentication.login.SigninResult
 import com.nafepay.domain.models.authentication.user.DeleteAccountDTO
