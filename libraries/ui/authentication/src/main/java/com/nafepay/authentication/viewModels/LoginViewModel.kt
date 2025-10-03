@@ -5,8 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.nafepay.authentication.events.LoginEvent
 import com.nafepay.authentication.states.LoginState
 import com.nafepay.core.di.Preferences
+import com.nafepay.core.utils.Validation
 import com.nafepay.domain.database.daos.UserDao
+import com.nafepay.domain.database.models.User
+import com.nafepay.domain.exceptions.ServerException
 import com.nafepay.domain.interactors.authentication.Authenticate
+import com.nafepay.domain.models.authentication.login.SigninResult
+import com.nafepay.navigation.AuthenticationDirections
+import com.nafepay.navigation.NavigationManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -163,11 +169,9 @@ class LoginViewModel(
                     userDao.insertAll(
                         User(
                             name = res.user.name,
-                            privateKey =  res.user.privateKey,
-                            publicKey = res.user.publicKey,
                             id = res.user.id,
                             email = res.user.email,
-                            profile = res.user.profile
+                            username = res.user.email
                         )
                     )
 

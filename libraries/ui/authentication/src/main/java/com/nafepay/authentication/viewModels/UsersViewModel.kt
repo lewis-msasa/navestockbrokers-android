@@ -6,23 +6,19 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.nafepay.authentication.models.UserModel
 import com.nafepay.authentication.events.UsersEvent
-import com.nafepay.authentication.pagination.UserNotificationSource
 import com.nafepay.authentication.states.UsersState
-import com.nafepay.authentication.utils.constants.NotificationType
 import com.nafepay.core.di.Preferences
 import com.nafepay.domain.database.daos.UserDao
 import com.nafepay.domain.database.models.User
 import com.nafepay.domain.interactors.authentication.Authenticate
-import com.nafepay.domain.utils.constants.QueryConstants
 import com.nafepay.navigation.HomeDirections
 import com.nafepay.navigation.NavigationManager
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
-class UsersViewModel @Inject constructor(
+
+class UsersViewModel(
     private val authenticate: Authenticate,
     private val userDao: UserDao,
     private val sharedPrefs: Preferences,
@@ -33,13 +29,13 @@ class UsersViewModel @Inject constructor(
     val users: LiveData<List<User>> =  userDao.getUsers().asLiveData()
 
 
-   val notificationsPaging = Pager(PagingConfig(pageSize = QueryConstants.NUM_ROWS)) {
-        UserNotificationSource(
-            authenticate,
-            userDao,
-            NotificationType.UNREAD
-        )
-    }.flow
+//   val notificationsPaging = Pager(PagingConfig(pageSize = 5)) {
+//        UserNotificationSource(
+//            authenticate,
+//            userDao,
+//            NotificationType.UNREAD
+//        )
+//    }.flow
     init{
           viewModelScope.launch {
 
@@ -123,18 +119,18 @@ class UsersViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                val userGraph = authenticate.getUserGraph(userId)
-                if (userGraph != null) {
-                    if(userGraph.user != null){
-                         val user = UserModel.ModelMapper.fromGraph(userGraph)
-                            _uiState.value.build {
-                                userModel = user
-                                loading = false
-                            }
-                            callback(user)
-
-                    }
-                }
+//                val userGraph = authenticate.getUserGraph(userId)
+//                if (userGraph != null) {
+//                    if(userGraph.user != null){
+//                         val user = UserModel.ModelMapper.fromGraph(userGraph)
+//                            _uiState.value.build {
+//                                userModel = user
+//                                loading = false
+//                            }
+//                            callback(user)
+//
+//                    }
+//                }
 
             }
             catch(ex : Exception) {

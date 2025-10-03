@@ -34,7 +34,7 @@ android {
 
 dependencies {
     api(libs.koin.android)
-    api(libs.koin.androidx.viewmodel)
+    //api(libs.koin.androidx.viewmodel)
 
     implementation(libs.prettytime)
 

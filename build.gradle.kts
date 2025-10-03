@@ -6,3 +6,11 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.jvm) apply false
     alias(libs.plugins.android.library) apply false
 }
+subprojects {
+    configurations.all {
+        exclude(group = "com.intellij", module = "annotations")
+        resolutionStrategy {
+            force("org.jetbrains:annotations:23.0.0")
+        }
+    }
+}

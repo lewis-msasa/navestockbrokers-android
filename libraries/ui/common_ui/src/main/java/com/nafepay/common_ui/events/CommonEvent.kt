@@ -49,7 +49,7 @@ sealed class CommonEvent {
     data class ChangeBottomSheetHeader(val header: @Composable ColumnScope.() -> Unit) : CommonEvent()
     data class ChangeBottomSheetAction(val action : () -> Unit) : CommonEvent()
     data class ChangeShowAddToPlaylist(val show : Boolean) : CommonEvent()
-    data class ChangeDownloadData(val data : DownloadData) : CommonEvent()
+
     data class ChangeShowAddPlaylist(val show : Boolean) : CommonEvent()
     data class ChangeUserId(val userId: String) : CommonEvent()
     data class GetNewsYear(val year: Int) : CommonEvent()

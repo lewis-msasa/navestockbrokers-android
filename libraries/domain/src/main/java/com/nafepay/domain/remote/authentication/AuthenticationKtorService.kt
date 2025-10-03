@@ -23,7 +23,7 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 
-class AuthenticationKtorService constructor(private val client: HttpClient) {
+class AuthenticationKtorService(private val client: HttpClient) {
 
 
     suspend fun logout(): GeneralResult {

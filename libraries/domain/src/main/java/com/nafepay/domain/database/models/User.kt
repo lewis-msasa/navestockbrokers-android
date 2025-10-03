@@ -8,8 +8,9 @@ import kotlinx.serialization.Serializable
 @Entity(tableName = "users")
 @Serializable
 data class User(
-    @PrimaryKey val id: String,
+    @PrimaryKey val dbId: Long = Long.MIN_VALUE,
     val name : String,
     val username: String,
-    val email: String
+    val email: String,
+    val id: String
 )

@@ -11,15 +11,15 @@ object ThemeHelper {
     fun isDarkTheme(): Boolean {
         return true//isSystemInDarkTheme()
     }
-//    @Composable
-//    fun getLogoResource() : Int {
-//
-//        return if(isDarkTheme()){
-//            R.drawable.nafepay_logo
-//        } else{
-//            R.drawable.nafepay_logo
-//        }
-//    }
+    @Composable
+    fun getLogoResource() : Int {
+
+        return if(isDarkTheme()){
+            R.drawable.nave_logo
+        } else{
+            R.drawable.nave_logo
+        }
+    }
     @Composable
     fun getPxFromDP(sizeInDp: Dp) : Float{
         val scale = Resources.getSystem().displayMetrics.density

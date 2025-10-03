@@ -1,15 +1,11 @@
 package com.nafepay.common_ui.models
 
 import com.nafepay.domain.database.models.User
-import com.nafepay.domain.models.authentication.users.UserDTO
-import com.nafepay.domain.users.GetUserQuery
+import com.nafepay.domain.models.authentication.user.UserDTO
 
 data class UserModel(
     val name: String,
     val email : String,
-    val profile:String,
-    val profilePic: String = "",
-    val phoneNumber:String = "",
     val id: String,
 ){
     object ModelMapper {
@@ -17,29 +13,23 @@ data class UserModel(
             UserModel(
                 name = user.name,
                 email = user.email,
-                profile = user.profile,
-                profilePic = user.profilePicPath,
                 id = user.id,
-                phoneNumber = "",
 
             )
         fun fromUserDTO(user : UserDTO, ) =
             UserModel(
                 name = user.fullName,
                 email = user.email,
-                profile = "",
-                profilePic = "",
-                id = user.id,
-                phoneNumber = user.phoneNumber,
+                id = user.id
 
             )
-        fun fromGraph(user : GetUserQuery.Data) =
-            UserModel(
-                name = user.user!!.fullName,
-                email = user.user!!.email,
-                profile = user.user!!.profile,
-                profilePic = user.user!!.profilePicPath,
-                id = user.user!!.id,
-            )
+//        fun fromGraph(user : GetUserQuery.Data) =
+//            UserModel(
+//                name = user.user!!.fullName,
+//                email = user.user!!.email,
+//                profile = user.user!!.profile,
+//                profilePic = user.user!!.profilePicPath,
+//                id = user.user!!.id,
+//            )
     }
 }

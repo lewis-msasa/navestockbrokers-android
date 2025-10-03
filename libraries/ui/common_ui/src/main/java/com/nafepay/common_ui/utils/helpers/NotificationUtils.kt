@@ -44,7 +44,7 @@ fun NotificationManager.sendDownloadNotification(title:String,
 
     val builder = NotificationCompat.Builder(
         applicationContext,
-        applicationContext.getString(R.string.nafepay_notification_channel_id)).apply {
+        applicationContext.getString(R.string.nave_notification_channel_id)).apply {
         setContentTitle(title)
         setSilent(true)
         setContentText(messageBody)
@@ -80,7 +80,7 @@ fun NotificationManager.sendNotification(title:String, messageBody: String, appl
     // Build the notification
     val builder = NotificationCompat.Builder(
         applicationContext,
-        applicationContext.getString(R.string.nafepay_notification_channel_id)
+        applicationContext.getString(R.string.nave_notification_channel_id)
     )
 
         .setSmallIcon(R.drawable.avatar)
@@ -102,10 +102,10 @@ class NotificationUtils{
             // Create the NotificationChannel, but only on API 26+ because
             // the NotificationChannel class is new and not in the support library
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val id = applicationContext.getString(R.string.nafepay_notification_channel_id)
-                val name = applicationContext.getString(R.string.nafepay_notification_channel_name)
+                val id = applicationContext.getString(R.string.nave_notification_channel_id)
+                val name = applicationContext.getString(R.string.nave_notification_channel_name)
                 val descriptionText =
-                    applicationContext.getString(R.string.nafepay_channel_description)
+                    applicationContext.getString(R.string.nave_channel_description)
                 val importance = NotificationManager.IMPORTANCE_DEFAULT
                 val channel = NotificationChannel(id, name, importance).apply {
                     description = descriptionText

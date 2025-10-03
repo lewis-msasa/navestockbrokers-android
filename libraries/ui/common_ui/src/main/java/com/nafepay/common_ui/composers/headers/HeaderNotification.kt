@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.nafepay.common_ui.extensions.length
-import com.nafepay.common_ui.theme.AzoTheme
+import com.nafepay.common_ui.theme.NafeTheme
 import com.nafepay.common_ui.theme.ThemeHelper
 import com.nafepay.common_ui.R
 
@@ -25,7 +25,7 @@ import com.nafepay.common_ui.R
 @Preview(showBackground = true)
 @Composable
 fun prevHeaderNotifications(){
-    AzoTheme {
+    NafeTheme {
        HeaderNotifications(
               1
         ,100.dp){

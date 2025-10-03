@@ -1,18 +1,23 @@
 package com.navepay
 
 import android.app.Application
-import com.nafepay.domain.di.appModule
-import com.nafepay.domain.di.databaseModule
-import com.nafepay.domain.di.networkModule
-import com.nafepay.domain.di.repositoryModule
+import com.nafepay.domain.database.models.User
+import com.nafepay.main.infrastructure.di.databaseModule
+import com.nafepay.main.infrastructure.di.networkModule
+import com.nafepay.main.infrastructure.di.repositoryModule
+import com.navepay.di.appModule
+import com.navepay.di.viewModelModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 class NaveStockApp : Application() {
+    var user : User? = null
     override fun onCreate() {
         super.onCreate()
         startKoin {
             androidContext(this@NaveStockApp)
-            modules(listOf(appModule, networkModule, repositoryModule, databaseModule))
+            modules(listOf( networkModule, repositoryModule, databaseModule,
+                appModule,viewModelModules
+            ))
         }
     }
 }

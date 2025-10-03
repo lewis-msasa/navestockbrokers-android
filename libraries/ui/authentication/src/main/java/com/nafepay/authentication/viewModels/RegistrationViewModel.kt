@@ -11,15 +11,20 @@ import com.nafepay.core.di.Preferences
 import com.nafepay.core.utils.Validation
 import com.nafepay.domain.database.daos.UserDao
 import com.nafepay.domain.database.models.User
+import com.nafepay.domain.exceptions.ServerException
 import com.nafepay.domain.interactors.authentication.Authenticate
+import com.nafepay.domain.models.authentication.registration.SignupResult
+import com.nafepay.navigation.AuthenticationDirections
+import com.nafepay.navigation.HomeDirections
+import com.nafepay.navigation.NavigationManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
-class RegistrationViewModel constructor(
-    private val keyGeneration: KeyGeneration,
+class RegistrationViewModel(
     private val authenticate: Authenticate,
     private val sharedPrefs: Preferences,
     private val userDao: UserDao,
@@ -278,18 +283,12 @@ class RegistrationViewModel constructor(
         if (result != null) {
             if(result.success) {
                 //secret key
-                val secretKey = keyGeneration.generateSecretKey()
-                var secretKeyString : String? = null
-                if(secretKey != null) {
-                    keyGeneration.saveSecretKey(secretKey, viewModelScope)
-                    secretKeyString = KeyGeneration.keyToString(secretKey)
-                }
+
+
                 var usr =  User(
                     name = result.user.name,
-                    privateKey =  secretKeyString ?: result.user.privateKey,
-                    publicKey = result.user.publicKey,
                     id = result.user.id,
-                    profile = "",
+                    username = result.user.email,
                     email = result.user.email
                 )
                 userDao.insertAll(
@@ -389,19 +388,13 @@ class RegistrationViewModel constructor(
                             userDao.insertAll(
                                 User(
                                     name = res.user.name,
-                                    privateKey =  res.user.privateKey,
-                                    publicKey = res.user.publicKey,
                                     id = res.user.id,
-                                    profile = res.user.profile,
+                                    username = res.user.email,
                                     email = res.user.email,
-
-
                                     )
                             )
                             //secret key
-                            val secretKey = keyGeneration.generateSecretKey()
-                            if(secretKey != null)
-                                keyGeneration.saveSecretKey(secretKey,viewModelScope)
+
 
                         }
                         sharedPrefs.setSocialLogin(true)

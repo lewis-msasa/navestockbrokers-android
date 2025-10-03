@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
-    id("com.google.devtools.ksp") version libs.versions.ksp.get()
+    //id("com.google.devtools.ksp") version libs.versions.ksp.get()
     //alias(libs.plugins.apollo)
     //kotlin("kapt")
 }
@@ -48,16 +48,16 @@ dependencies {
 
     //implementation(libs.apollo.runtime)
     //implementation(libs.apollo.normalized.cache) // optional if you want caching
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging)
+    api(libs.okhttp)
+    api(libs.okhttp.logging)
 
-    implementation(libs.ktor.core)
-    implementation(libs.ktor.cio)
-    implementation(libs.ktor.logging)
-    implementation(libs.ktor.serialization)
-    implementation(libs.ktor.auth)
-    implementation(libs.ktor.content.negotiation)
-    implementation(libs.ktor.client.okhttp)
+    api(libs.ktor.core)
+    api(libs.ktor.cio)
+    api(libs.ktor.logging)
+    api(libs.ktor.serialization)
+    api(libs.ktor.auth)
+    api(libs.ktor.content.negotiation)
+    api(libs.ktor.client.okhttp)
 
     implementation(libs.gson)
 
@@ -67,7 +67,7 @@ dependencies {
 
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
+    //ksp(libs.room.compiler)
 }
 //apollo {
 //    service("user") {

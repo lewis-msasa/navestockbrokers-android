@@ -4,7 +4,8 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Card
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -13,7 +14,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.nafepay.common_ui.theme.AzoTheme
+import com.nafepay.common_ui.theme.NafeTheme
 import com.nafepay.common_ui.theme.ShimmerColorShades
 
 @Composable
@@ -33,7 +34,7 @@ fun ShimmerCircleItem(
             modifier  = Modifier
                 .size(size),
             shape = CircleShape,
-            elevation = 12.dp
+            elevation = CardDefaults.cardElevation( defaultElevation =  12.dp)
         ) {
             // below line we are creating a new image.
             Spacer(
@@ -51,7 +52,7 @@ fun ShimmerCircleItem(
 @Composable
 @Preview
 fun ShimmerPreview(){
-    AzoTheme() {
+    NafeTheme() {
         ShimmerAnimation(size = 50.dp, isCircle = false)
     }
 }

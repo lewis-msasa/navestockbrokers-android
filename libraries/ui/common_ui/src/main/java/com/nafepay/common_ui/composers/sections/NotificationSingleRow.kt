@@ -17,13 +17,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.nafepay.common_ui.theme.AzoTheme
+import com.nafepay.common_ui.theme.NafeTheme
 
 
 @Preview(showBackground = true)
 @Composable
 fun prevNotificationSingleRow() {
-    AzoTheme {
+    NafeTheme {
         Box(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.surface)

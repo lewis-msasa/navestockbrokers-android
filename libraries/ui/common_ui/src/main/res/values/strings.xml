@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">stock-broker</string>
+    <!--<string name="app_name">common-ui</string>-->
+    <string name="app_name">NaveBrokers</string>
+    <string name="database">NaveBrokers</string>
+    <string name="nave_notification_channel_id">notification_channel_nave</string>
+    <string name="nave_channel_description">Notification Channel for NAVE</string>
+    <string name="nave_notification_channel_name">NAVE Notification Channel</string>
 </resources>

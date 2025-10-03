@@ -27,7 +27,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun AzoTheme(
+fun NafeTheme(
     darkTheme: Boolean = ThemeHelper.isDarkTheme(),
     content: @Composable () -> Unit
 ) {

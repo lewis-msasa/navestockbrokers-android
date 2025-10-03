@@ -16,7 +16,7 @@ class Authenticate(
     private val authenticationRepository: AuthenticationRepository,
     private val userDao: UserDao
 ){
-      suspend fun getCurrentUser(getUser : (user : User) -> Unit) {
+      suspend fun getCurrentUser(getUser : (user : User?) -> Unit) {
           withContext(Dispatchers.IO) {
               userDao.getUser().collect {
                   getUser(it)

@@ -19,14 +19,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.nafepay.common_ui.theme.AzoTheme
+import com.nafepay.common_ui.theme.NafeTheme
 import com.nafepay.navigation.BackPageData
 import com.nafepay.common_ui.R
 
 @Preview(showBackground = true)
 @Composable
 fun prevBackTopBar(){
-    AzoTheme {
+    NafeTheme {
         backTopBar(title = "@Enyo", backAction = {isDeep, title ->
 
         }, BackPageData()){

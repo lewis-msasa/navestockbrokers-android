@@ -6,7 +6,11 @@ import com.nafepay.authentication.events.PasswordEvent
 import com.nafepay.authentication.states.PasswordState
 import com.nafepay.core.di.Preferences
 import com.nafepay.domain.database.daos.UserDao
+import com.nafepay.domain.database.models.User
 import com.nafepay.domain.interactors.authentication.Authenticate
+import com.nafepay.navigation.AuthenticationDirections
+import com.nafepay.navigation.HomeDirections
+import com.nafepay.navigation.NavigationManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -85,11 +89,9 @@ class PasswordViewModel constructor(
                             userDao.insertAll(
                                 User(
                                     name = res.user.name,
-                                    privateKey =  res.user.privateKey,
-                                    publicKey = res.user.publicKey,
                                     id = res.user.id,
                                     email = res.user.email,
-                                    profile = res.user.profile
+                                    username =  res.user.email
                                 )
                             )
 
