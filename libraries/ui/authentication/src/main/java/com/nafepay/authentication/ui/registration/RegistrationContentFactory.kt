@@ -93,7 +93,7 @@ private fun Registration(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = commonPadding)
-                            .align(Alignment.TopCenter)
+                            .align(Alignment.Center)
                             .verticalScroll(scrollState)
                     )
                     {
@@ -172,7 +172,7 @@ private fun Registration(
                         var phoneNumberField by remember { mutableStateOf(TextFieldValue(viewState.phoneNumber)) }
                         CustomTextField(
                             value = phoneNumberField,
-                            placeholder = "enter phone number",
+                            placeholder = "Phone number",
                             onChange = {
                                 events(RegistrationEvent.PhoneNumberChanged(it.text))
                                 phoneNumberField = it
@@ -299,7 +299,7 @@ private fun Registration(
                                 modifier = Modifier
                                     .width(screenWidth)
                                     .height(buttonHeight)
-                                    .padding(horizontal = 12.dp),
+                                    .padding(horizontal = commonPadding),
                                 colors = ButtonDefaults.buttonColors(
                                     disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
                                 ),
@@ -309,7 +309,7 @@ private fun Registration(
 
                                 Text(
                                     "Sign Up",
-                                    color = Color.White
+                                    color = MaterialTheme.colorScheme.onPrimary
                                 )
 
 

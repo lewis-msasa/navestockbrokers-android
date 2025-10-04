@@ -30,14 +30,14 @@ fun GoogleButton(width: Dp, action : () -> Unit){
             .width(width)
             .background(MaterialTheme.colorScheme.surface)
             .height(buttonHeight)
-            .padding(horizontal = zeroPadding),
+            .padding(horizontal = commonPadding),
         colors = ButtonDefaults.buttonColors(
             contentColor = MaterialTheme.colorScheme.surface,
 
             ),
         border = BorderStroke(
             color = Color.Gray,
-            width = 1.dp
+            width = 0.dp
         ),
         onClick = {
             Log.d("Clicked","CLicked")

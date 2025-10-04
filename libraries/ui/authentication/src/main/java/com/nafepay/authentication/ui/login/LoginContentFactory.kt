@@ -80,7 +80,7 @@ private fun login(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = commonPadding)
-                            .align(Alignment.TopCenter)
+                            .align(Alignment.Center)
                             .verticalScroll(scrollState)
                     )
                     {
@@ -172,7 +172,7 @@ private fun login(
 
                                 Text(
                                     "Login",
-                                    color = MaterialTheme.colorScheme.surface
+                                    color = MaterialTheme.colorScheme.onPrimary
                                 )
 
 
