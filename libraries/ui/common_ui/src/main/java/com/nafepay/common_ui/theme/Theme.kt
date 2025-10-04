@@ -5,25 +5,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val DarkColorScheme = darkColorScheme(
-    primary = NafepayPurple,
+    primary = DarkBlue,
     onPrimary = Color.White,
-    secondary = DarkGrey,
-    onSecondary = NafepayBlue,
-    background = Color.White,
-    onBackground = NafepayBlue,
-    surface = Color.White,
-    onSurface = NafepayBlue,
+    secondary = SecondaryBlue,
+    onSecondary = Color.White,
+    background = Color.Black,
+    onBackground = Color.White,
+    surface = Color.Black,
+    onSurface = Color.White,
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = NafepayBlue,
+    primary = DarkBlue,
     onPrimary = Color.White,
-    secondary = MainGrey,
-    onSecondary = DarkThemeBlack,
+    secondary = SecondaryBlue,
+    onSecondary = Color.White,
     background = Color.White,
-    onBackground = DarkThemeBlack,
+    onBackground = DarkBlue,
     surface = Color.White,
-    onSurface = DarkThemeBlack,
+    onSurface = DarkBlue,
 )
 
 @Composable

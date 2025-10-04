@@ -1,6 +1,7 @@
 package com.nafepay.common_ui.theme
 
 import android.content.res.Resources
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
 import com.nafepay.common_ui.R
@@ -9,7 +10,7 @@ object ThemeHelper {
 
     @Composable
     fun isDarkTheme(): Boolean {
-        return true//isSystemInDarkTheme()
+        return isSystemInDarkTheme()
     }
     @Composable
     fun getLogoResource() : Int {

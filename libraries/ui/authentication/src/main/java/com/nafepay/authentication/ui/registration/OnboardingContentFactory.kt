@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nafepay.authentication.events.RegistrationEvent
 import com.nafepay.authentication.viewModels.RegistrationViewModel
-import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
@@ -74,15 +73,16 @@ private fun OnBoardingUI(
             )
 
             AnimatedVisibility(visible = pagerState.currentPage == (pages.size - 1) ) {
-                OutlinedButton(shape = RoundedCornerShape(20.dp) ,
+                OutlinedButton(shape = RoundedCornerShape(2.dp) ,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp),onClick = {
                             events(RegistrationEvent.RegistrationNavigationClicked)
                     },
+                    border = ButtonDefaults.outlinedButtonBorder(enabled = false),
                     colors = ButtonDefaults.outlinedButtonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.surface)) {
+                        contentColor = MaterialTheme.colorScheme.onPrimary)) {
                     Text(text = "Get Started")
                 }
             }
@@ -118,19 +118,19 @@ fun PageUI(page: Page) {
 
 val pages = listOf(
     Page(
-        "Listen to sermons",
-        "Listen to Apostle's sermons at your comfort",
-        R.drawable.ic_eye
+        "Stock Market",
+        "Watch and trade stocks on the Malawi stock exchange",
+        R.drawable.stock_market
     ),
     Page(
-        "Watch sermons",
-        "Watch Apostle's sermons at your comfort",
-        R.drawable.ic_mic
+        "Portfolio",
+        "Manage your stock portfolio",
+        R.drawable.briefcase
     ),
     Page(
-        "Get Latest News",
-        "Follow Apostle through news",
-        R.drawable.ic_x
+        "News & Insights",
+        "Get News and Insights about the stock market",
+        R.drawable.news
     )
 )
 

@@ -48,6 +48,7 @@ dependencies {
     implementation(project(":libraries:ui:main"))
     implementation(project(":libraries:ui:portfolio"))
     implementation(project(":libraries:ui:stocks"))
+    implementation("androidx.core:core-splashscreen:1.0.1")
     implementation(libs.koin.android)
     //implementation(libs.koin.androidx.viewmodel)
     implementation(libs.koin.androidx.compose)

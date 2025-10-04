@@ -34,40 +34,42 @@ class SplashScreenActivity : AppCompatActivity() {
     val userDao : UserDao by inject()
 
 
-    private var TIME_OUT:Long = 3000
+    private var TIME_OUT:Long = 300
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash_screen)
-        val layout = findViewById<ConstraintLayout>(R.id.splashLayout)
-        val text = findViewById<TextView>(R.id.textViewId)
-        text.setTextColor(Color(0xFF044B95).toArgb())
-        var  logo = com.nafepay.common_ui.R.drawable.nave_logo
-        var backgroundColor = Color.White.toArgb()
-        if (applicationContext.isDarkThemeOn()){
-           logo = com.nafepay.common_ui.R.drawable.nave_logo
-           backgroundColor = Color(0xFFFFFF).toArgb()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            setContentView(R.layout.activity_splash_screen)
         }
-        val imageView = findViewById<ImageView>(R.id.imageView)
-        imageView.setImageResource(logo)
-        layout.setBackgroundColor(backgroundColor)
+//        val layout = findViewById<ConstraintLayout>(R.id.splashLayout)
+//        val text = findViewById<TextView>(R.id.textViewId)
+//        text.setTextColor(Color(0xFF044B95).toArgb())
+//        var  logo = com.nafepay.common_ui.R.drawable.nave_logo
+//        var backgroundColor = Color.White.toArgb()
+//        if (applicationContext.isDarkThemeOn()){
+//           logo = com.nafepay.common_ui.R.drawable.nave_logo
+//           backgroundColor = Color(0xFFFFFF).toArgb()
+//        }
+//        val imageView = findViewById<ImageView>(R.id.imageView)
+//        imageView.setImageResource(logo)
+//        layout.setBackgroundColor(backgroundColor)
 
         val window = this.window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.statusBarColor = backgroundColor
+        //window.statusBarColor = backgroundColor
 
         // HERE WE ARE TAKING THE REFERENCE OF OUR IMAGE
         // SO THAT WE CAN PERFORM ANIMATION USING THAT IMAGE
 
-        val slideAnimation = AnimationUtils.loadAnimation(this, R.anim.side_slide)
-        imageView.startAnimation(slideAnimation)
-
-
-        val slideAnimationText = AnimationUtils.loadAnimation(this, R.anim.side_slide2)
-        text.startAnimation(slideAnimationText)
+//        val slideAnimation = AnimationUtils.loadAnimation(this, R.anim.side_slide)
+//        imageView.startAnimation(slideAnimation)
+//
+//
+//        val slideAnimationText = AnimationUtils.loadAnimation(this, R.anim.side_slide2)
+//        text.startAnimation(slideAnimationText)
 
 
 

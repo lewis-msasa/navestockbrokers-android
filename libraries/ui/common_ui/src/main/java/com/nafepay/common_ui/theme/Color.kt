@@ -23,6 +23,12 @@ val DarkThemeBlack = Color(0xFF000000)
 
 val White009 = Color.White.copy(0.09f)
 
+val DarkBlue = Color( 0xFF032E8A )
+
+val SecondaryBlue = Color(0xFF069CDF)
+
+val GrayBlue = Color (0xFFC4E6FE)
+
 val ShimmerColorShades = listOf(
 
     Color.LightGray.copy(0.9f),
