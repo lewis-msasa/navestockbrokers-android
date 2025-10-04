@@ -39,6 +39,7 @@ import com.nafepay.authentication.viewModels.RegistrationViewModel
 import com.nafepay.common_ui.composers.general.LoadingBoxWithParameters
 import kotlinx.coroutines.launch
 import com.nafepay.common_ui.R
+import com.nafepay.common_ui.theme.zeroPadding
 
 @Composable
 fun Registration(
@@ -91,6 +92,7 @@ private fun Registration(
                         verticalArrangement = Arrangement.Center,
                         modifier = Modifier
                             .fillMaxWidth()
+                            .padding(top = commonPadding)
                             .align(Alignment.TopCenter)
                             .verticalScroll(scrollState)
                     )
@@ -166,17 +168,18 @@ private fun Registration(
                             padding = commonPadding,
                             shape = RoundedCornerShape(10)
                         )
-                        /*Spacer(modifier = Modifier.padding(8.dp))
-                        var usernameField by remember { mutableStateOf(TextFieldValue(viewState.username)) }
+                        Spacer(modifier = Modifier.padding(8.dp))
+                        var phoneNumberField by remember { mutableStateOf(TextFieldValue(viewState.phoneNumber)) }
                         CustomTextField(
-                            value = usernameField,
-                            placeholder = "Choose Username",
+                            value = phoneNumberField,
+                            placeholder = "enter phone number",
                             onChange = {
-                                events(RegistrationEvent.UsernameChanged(it.text))
-                                usernameField = it
+                                events(RegistrationEvent.PhoneNumberChanged(it.text))
+                                phoneNumberField = it
                             },
                             keyboardOptions = KeyboardOptions(
                                 imeAction = ImeAction.Next,
+                                keyboardType = KeyboardType.Phone
                             ),
                             //modifier = Modifier.focusRequester(focusRequester),
                             keyboardActions = KeyboardActions(
@@ -188,7 +191,7 @@ private fun Registration(
                             width = screenWidth,
                             padding = commonPadding,
                             shape = RoundedCornerShape(10)
-                        )*/
+                        )
                         Spacer(modifier = Modifier.padding(8.dp))
                         var isPasswordFieldFocused by remember { mutableStateOf(false)}
                         AnimatedVisibility(visible = isPasswordFieldFocused) {
@@ -288,7 +291,7 @@ private fun Registration(
                         Spacer(modifier = Modifier.padding(12.dp))
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier.padding(horizontal = commonPadding)
+                            modifier = Modifier.padding(horizontal = zeroPadding)
                         ) {
                             Button(
                                 shape = MaterialTheme.shapes.medium,

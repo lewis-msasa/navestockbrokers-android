@@ -27,6 +27,7 @@ import com.nafepay.common_ui.theme.buttonHeight
 import com.nafepay.common_ui.composers.buttons.GoogleButton
 import com.nafepay.common_ui.composers.textfields.CustomTextField
 import com.nafepay.common_ui.R
+import com.nafepay.common_ui.theme.zeroPadding
 
 @Composable
 fun Login(
@@ -78,6 +79,7 @@ private fun login(
                         verticalArrangement = Arrangement.Center,
                         modifier = Modifier
                             .fillMaxWidth()
+                            .padding(top = commonPadding)
                             .align(Alignment.TopCenter)
                             .verticalScroll(scrollState)
                     )

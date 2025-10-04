@@ -1,4 +1,4 @@
-package com.example.common_ui.utils.helpers
+package com.nafepay.common_ui.utils.helpers
 
 import android.os.Build
 import android.view.View

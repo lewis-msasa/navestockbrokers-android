@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -97,7 +98,8 @@ class AuthenticationActivity : AppCompatActivity() {
             CompositionLocalProvider(LocalSysUiController provides systemUiController) {
 
                     NafeTheme  {
-
+                        window.decorView.systemUiVisibility =
+                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         if (ThemeHelper.isDarkTheme())
                             window.statusBarColor = MaterialTheme.colorScheme.onPrimary.toArgb()
                         else

@@ -19,17 +19,18 @@ import androidx.compose.ui.unit.dp
 import com.nafepay.common_ui.theme.buttonHeight
 import com.nafepay.common_ui.theme.commonPadding
 import com.nafepay.common_ui.R
+import com.nafepay.common_ui.theme.zeroPadding
 
 
 @Composable
 fun GoogleButton(width: Dp, action : () -> Unit){
     Button(
-        shape = RoundedCornerShape(40),
+        shape = RoundedCornerShape(2),
         modifier = Modifier
             .width(width)
             .background(MaterialTheme.colorScheme.surface)
             .height(buttonHeight)
-            .padding(horizontal = commonPadding),
+            .padding(horizontal = zeroPadding),
         colors = ButtonDefaults.buttonColors(
             contentColor = MaterialTheme.colorScheme.surface,
 
