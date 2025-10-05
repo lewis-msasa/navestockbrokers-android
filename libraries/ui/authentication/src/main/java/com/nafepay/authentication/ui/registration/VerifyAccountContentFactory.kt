@@ -22,6 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.times
 import com.nafepay.common_ui.composers.textfields.CustomTextField
 import com.nafepay.common_ui.theme.commonPadding
 import com.nafepay.authentication.events.RegistrationEvent
@@ -68,6 +69,8 @@ private fun VerifyAccount(
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.TopCenter)
+                        .padding(WindowInsets.statusBars.asPaddingValues())
+                        .padding(top = (2 * commonPadding))
                         .verticalScroll(scrollState)
                 )
                 {
@@ -82,7 +85,7 @@ private fun VerifyAccount(
                     Text(
                         "Verify Account",
                         textAlign = TextAlign.Start,
-                        style = MaterialTheme.typography.titleSmall.copy(
+                        style = MaterialTheme.typography.titleMedium.copy(
                             MaterialTheme.colorScheme.onSurface,
                             fontWeight = FontWeight.Bold
                         ),
@@ -137,7 +140,7 @@ private fun VerifyAccount(
 
                     Spacer(modifier = Modifier.padding(8.dp))
                     Button(
-                        shape = RoundedCornerShape(30),
+                        shape = MaterialTheme.shapes.medium,
                         enabled = viewState.isVerifyCodeContentValid && !viewState.isLoading,
                         modifier = Modifier
                             .width(screenWidth)
@@ -152,7 +155,7 @@ private fun VerifyAccount(
 
                         Text(
                             "Verify Account",
-                            color = MaterialTheme.colorScheme.surface
+                            color = MaterialTheme.colorScheme.onPrimary
                         )
 
 
@@ -189,7 +192,7 @@ private fun VerifyAccount(
 
                 Row(
                     horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.align(Alignment.BottomCenter).padding(12.dp)
+                    modifier = Modifier.align(Alignment.BottomCenter).padding(commonPadding)
                 ) {
                     Text(
                         "Not Working?",

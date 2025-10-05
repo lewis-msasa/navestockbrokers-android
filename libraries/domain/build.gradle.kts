@@ -58,6 +58,7 @@ dependencies {
     api(libs.ktor.auth)
     api(libs.ktor.content.negotiation)
     api(libs.ktor.client.okhttp)
+    implementation(libs.ktor.client.mock)
 
     implementation(libs.gson)
 

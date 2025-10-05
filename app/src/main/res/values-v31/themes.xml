@@ -4,7 +4,6 @@
     <style name="Theme.Stockbroker.NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="windowSplashScreenBackground">@color/white</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/nave_logo_2</item>
-        <item name="windowSplashScreenAnimationDuration">100</item>
         <item name="postSplashScreenTheme">@style/Theme.Stockbroker.NoActionBar</item>
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>

@@ -23,8 +23,17 @@ class Preferences constructor(
     val isVerified: Flow<Boolean?> = context.dataStore.data
         .map { preferences -> preferences[IS_VERIFIED] }
 
+
+
     suspend fun setIsVerified(isVerified: Boolean) {
         context.dataStore.edit { settings -> settings[IS_VERIFIED] = isVerified }
+    }
+
+    private val ONBOARDING_VIEWED = booleanPreferencesKey("onboarding_viewed")
+    val onboardingViewed: Flow<Boolean?> = context.dataStore.data
+        .map { preferences -> preferences[ONBOARDING_VIEWED] }
+    suspend fun setOnboardingViewed(isViewed: Boolean) {
+        context.dataStore.edit { settings -> settings[ONBOARDING_VIEWED] = isViewed }
     }
 
     private val KEY_REFRESH_TOKEN = stringPreferencesKey("refresh_token")

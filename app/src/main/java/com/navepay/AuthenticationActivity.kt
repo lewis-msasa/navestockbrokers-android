@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -86,6 +87,8 @@ class AuthenticationActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             //.requestIdToken(getString(R.string.server_client_id))
             .requestEmail()
@@ -107,15 +110,13 @@ class AuthenticationActivity : AppCompatActivity() {
 
                         val token by sharedPrefs.accessToken.collectAsState(initial = null)
                         val isVerified by sharedPrefs.isVerified.collectAsState(initial = false)
-
+                        val onboardingViewed by sharedPrefs.onboardingViewed.collectAsState(initial = false)
 
                         val context = LocalContext.current
 
                         val navController = rememberNavController()
 
-                        var startDestination = AuthenticationDirections.onboarding.destination
-
-
+                        val startDestination = AuthenticationDirections.onboarding.destination
 
 
                         navigationManager.commands.collectAsState().value.also{ command ->
@@ -132,6 +133,7 @@ class AuthenticationActivity : AppCompatActivity() {
                                     if(dest != null){
                                         destination = dest
                                     }
+                                    Log.d("NAVTO", destination)
                                     navController.navigate(destination)
 
                                 }
@@ -151,8 +153,18 @@ class AuthenticationActivity : AppCompatActivity() {
 
 
                         NavHost(navController,
-                            startDestination = startDestination) {
+                            startDestination = "START") {
+                            Log.d("NAVIGATION", startDestination)
+                            composable(
+                                "START"
+                            ) {
+                                EnterAnimation {
 
+                                    LoadingBox()
+                                }
+
+
+                            }
                             composable(
                                 AuthenticationDirections.onboarding.destination
                             ) {
@@ -225,10 +237,18 @@ class AuthenticationActivity : AppCompatActivity() {
         }
 
         CoroutineScope(Dispatchers.Main).launch {
-            sharedPrefs.accessToken.collectLatest { token ->
-                sharedPrefs.isVerified.collectLatest { verified ->
-                    if((verified == false || verified == null) && token != null){
-                        navigationManager.navigate(AuthenticationDirections.verifyAccount)
+            sharedPrefs.onboardingViewed.collectLatest { onBoardingViewed ->
+                sharedPrefs.accessToken.collectLatest { token ->
+                    sharedPrefs.isVerified.collectLatest { verified ->
+                        if ((verified == false || verified == null) && token != null) {
+                            navigationManager.navigate(AuthenticationDirections.verifyAccount)
+                        } else {
+                             if(onBoardingViewed == true)
+                                 navigationManager.navigate(AuthenticationDirections.registration)
+                            else
+                                navigationManager.navigate(AuthenticationDirections.onboarding)
+                        }
+
                     }
                 }
             }

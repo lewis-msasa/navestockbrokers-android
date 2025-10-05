@@ -92,7 +92,7 @@ private fun Registration(
                         verticalArrangement = Arrangement.Center,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = commonPadding)
+                            .padding(WindowInsets.statusBars.asPaddingValues())
                             .align(Alignment.Center)
                             .verticalScroll(scrollState)
                     )
@@ -106,7 +106,7 @@ private fun Registration(
                         Text(
                             "Create New Account",
                             textAlign = TextAlign.Start,
-                            style = MaterialTheme.typography.titleSmall.copy(
+                            style = MaterialTheme.typography.titleMedium.copy(
                                 MaterialTheme.colorScheme.onSurface,
                                 fontWeight = FontWeight.Bold
                             ),
@@ -120,7 +120,7 @@ private fun Registration(
                         CustomTextField(
                             value = emailField,
                             placeholder = "Email address",
-                            hasError = viewState.isEmailValid,
+                            hasError = !viewState.isEmailValid && viewState.email.isNotEmpty(),
                             modifier  = Modifier.focusRequester(focusRequester),
                             onChange = {
                                 events(RegistrationEvent.EmailChanged(it.text))
@@ -173,6 +173,7 @@ private fun Registration(
                         CustomTextField(
                             value = phoneNumberField,
                             placeholder = "Phone number",
+                            hasError = !viewState.isPhoneValid && viewState.phoneNumber.isNotEmpty(),
                             onChange = {
                                 events(RegistrationEvent.PhoneNumberChanged(it.text))
                                 phoneNumberField = it
@@ -215,6 +216,7 @@ private fun Registration(
                         CustomTextField(
                             value = passwordField,
                             placeholder = "Password",
+                            hasError = !viewState.isPasswordValid && viewState.password.isNotEmpty(),
                             onFocused = {
                                 isPasswordFieldFocused =  true
                             },
@@ -259,6 +261,7 @@ private fun Registration(
                         CustomTextField(
                             value = confirmField,
                             placeholder = "Confirm Password",
+                            hasError = !viewState.isConfirmValid && viewState.password.isNotEmpty(),
                             onChange = {
                                 events(RegistrationEvent.ConfirmPasswordChanged(it.text))
                                 confirmField = it

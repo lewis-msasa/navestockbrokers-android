@@ -88,7 +88,7 @@ private fun login(
                         Text(
                             "Welcome Back",
                             textAlign = TextAlign.Start,
-                            style = MaterialTheme.typography.titleSmall.copy(
+                            style = MaterialTheme.typography.titleMedium.copy(
                                 MaterialTheme.colorScheme.onSurface,
                                 fontWeight = FontWeight.Bold
                             ),

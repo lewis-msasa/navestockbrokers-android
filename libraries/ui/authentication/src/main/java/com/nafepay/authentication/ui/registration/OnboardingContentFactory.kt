@@ -43,10 +43,12 @@ private fun OnBoardingUI(
     ) {
         val pagerState = rememberPagerState( )
 
-        Column() {
+        Column(
+            modifier = Modifier.padding(WindowInsets.statusBars.asPaddingValues())
+        ) {
             if(pagerState.currentPage + 1 < pagerState.pageCount)
                 Text(text = "Skip",
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     fontSize = 14.sp,
                     textAlign = TextAlign.End,
                     modifier = Modifier

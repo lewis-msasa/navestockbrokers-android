@@ -6,6 +6,7 @@ import com.nafepay.domain.remote.authentication.AuthenticationKtorService
 import com.nafepay.domain.remote.authentication.AuthenticationRemote
 import com.nafepay.domain.remote.authentication.AuthenticationRemoteKtorStore
 import com.nafepay.domain.remote.ktor.KtorClient
+import com.nafepay.domain.remote.mock.KtorMockClient
 import com.nafepay.domain.repositories.authentication.AuthenticationDataRepository
 import com.nafepay.domain.repositories.authentication.AuthenticationRepository
 import org.koin.dsl.module
@@ -15,8 +16,8 @@ val networkModule = module {
 
     single { AuthInterceptor(get()) }
     single {
-        KtorClient.getClient(get())
-        //KtorMockClient.ktorHttpClient
+        //KtorClient.getClient(get())
+        KtorMockClient.ktorHttpClient
     }
 
     single{ AuthenticationKtorService(get()) }

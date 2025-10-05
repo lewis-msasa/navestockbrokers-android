@@ -78,6 +78,9 @@ class RegistrationViewModel(
                     }
                     RegistrationEvent.RegistrationNavigationClicked ->{
                         navigationManager.navigate(AuthenticationDirections.registration)
+                        viewModelScope.launch {
+                            sharedPrefs.setOnboardingViewed(true)
+                        }
                     }
                     RegistrationEvent.RegistrationClicked -> {
                         this.loading = true
@@ -114,6 +117,7 @@ class RegistrationViewModel(
                     }
                     is RegistrationEvent.PasswordChanged -> {
                         this.password = event.password
+                        this.isPasswordValid = Validation.isValidPassword(event.password)
                     }
                     is RegistrationEvent.FullNameChanged -> {
                         this.fullname = event.fullname
@@ -137,10 +141,12 @@ class RegistrationViewModel(
                     }
                     is RegistrationEvent.ConfirmPasswordChanged -> {
                         this.confirmPassword = event.confirmPassword
+                        this.isConfirmPasswordValid = event.confirmPassword == password
                     }
 
                     is RegistrationEvent.PhoneNumberChanged -> {
                         this.phoneNumber = event.phoneNumber
+                        this.isPhoneValid = Validation.isValidMalawiPhoneNumber(event.phoneNumber)
                     }
 
                     is RegistrationEvent.LoadUser -> {

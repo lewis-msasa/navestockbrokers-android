@@ -125,7 +125,7 @@ coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 slf4j = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 
 # Testing
-androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
+#androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
 androidX-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test" }
 androidX-compose-ui_test = { module = "androidx.compose.ui:ui-test-junit4" }
 
@@ -138,6 +138,7 @@ ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", versi
 ktor-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor"}
 
 # Coroutines
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
